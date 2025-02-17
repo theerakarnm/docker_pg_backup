@@ -1,4 +1,5 @@
 mod backup;
+mod encryption;
 mod settings;
 
 use std::error::Error;
@@ -14,6 +15,9 @@ async fn main() -> Result<(), Box<dyn Error>> {
         &config.backup_dir,
     )?;
     println!("Backup completed: {}", backup_file);
+
+    let encrypted_file = encryption::encrypt_file(&backup_file, config.encryption_key.as_bytes())?;
+    println!("Encrypted backup saved: {}", encrypted_file);
 
     Ok(())
 }
