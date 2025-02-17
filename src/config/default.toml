@@ -1,0 +1,7 @@
+container_name = "postgres_db"
+db_name = "mydatabase"
+db_user = "myuser"
+backup_dir = "./backups"
+s3_bucket = "your-bucket-name"
+aws_region = "us-east-1"
+encryption_key = "anexampleverysecretkey12345678"
