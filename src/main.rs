@@ -1,5 +1,6 @@
 mod backup;
 mod encryption;
+mod s3_upload;
 mod settings;
 
 use std::error::Error;
@@ -24,6 +25,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
         .unwrap()
         .to_str()
         .unwrap();
+    let s3_key = format!("backups/{}", file_name);
+
+    s3_upload::upload_file_to_s3(
+        &encrypted_file,
+        &config.s3_bucket,
+        &s3_key,
+        &config.aws_region,
+    )
+    .await?;
+    println!(
+        "Encrypted backup uploaded to S3 bucket '{}' with key '{}'",
+        config.s3_bucket, s3_key
+    );
 
     Ok(())
 }
