@@ -19,5 +19,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let encrypted_file = encryption::encrypt_file(&backup_file, config.encryption_key.as_bytes())?;
     println!("Encrypted backup saved: {}", encrypted_file);
 
+    let file_name = std::path::Path::new(&encrypted_file)
+        .file_name()
+        .unwrap()
+        .to_str()
+        .unwrap();
+
     Ok(())
 }
